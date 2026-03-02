@@ -1,26 +1,26 @@
-# TP 3.6 – Récupération d'erreurs
+# TP – Git Reset & Git Revert 🔙↩️
 
-Utiliser `git reflog` pour retrouver un commit « perdu » après un `reset --hard`.
+## Ce qui est préconfiguré dans ce dépôt
 
-## Tâches
+- **`main`** contient `app.js` avec 3 commits :
+  1. `feat: initial app version`
+  2. `feat: add greet function`
+  3. `feat: add math function`
 
-1. Créer une branche `feature/recovery`
-2. Faire **3 commits** :
-   - Ajouter `work1.txt` → `feat: important work 1`
-   - Ajouter `work2.txt` → `feat: important work 2`
-   - Ajouter `work3.txt` → `feat: important work 3`
-3. Simuler une erreur : `git reset --hard HEAD~3`
-4. Constater la disparition des commits et des fichiers
-5. Lancer `git reflog` et repérer l'entrée du dernier commit
-6. Récupérer : `git reset --hard HEAD@{1}` (ou le hash)
-7. Vérifier que tout est de retour ✨
+Ce dépôt est utilisé pour deux TPs :
+- **TP Reset** : tester `--soft`, `--mixed`, `--hard` et utiliser `reflog` pour récupérer
+- **TP Revert** : créer des commits A/B/C et les annuler proprement avec `revert`
 
-## Points clés
+## TP Reset
 
-```bash
-git reflog           # voir tout l'historique de HEAD
-git reset --hard HEAD@{n}   # revenir à un état précédent
-```
+1. Cloner et vérifier l'historique : `git log --oneline`
+2. Ajouter 2-3 commits de test
+3. Annuler avec `--soft` (conserve staging), `--mixed` (conserve working dir), `--hard` (tout supprime)
+4. Récupérer un commit "perdu" via `git reflog`
 
-> `git reflog` est votre filet de sécurité — les commits restent récupérables
-> pendant ~90 jours (avant le garbage collector).
+## TP Revert
+
+1. Cloner, créer 3 nouveaux commits (`feat: A`, `feat: B`, `feat: C`)
+2. Annuler `feat: B` avec `git revert <hash>`
+3. Observer que l'historique est intact + nouveau commit d'annulation créé
+4. Comparer avec `reset` : `revert` est sûr sur les branches partagées
